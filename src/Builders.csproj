@@ -1,0 +1,25 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>netstandard2.0</TargetFramework>
+    <VersionPrefix>1.0.0</VersionPrefix>
+    <Copyright>Copyright © 2018 Atif Aziz</Copyright>
+    <Description>Actions for building .NET objects</Description>
+    <Authors>Atif Aziz</Authors>
+    <Owners>Atif Aziz</Owners>
+    <Company></Company>
+    <PackageProjectUrl>https://github.com/atifaziz/Builders</PackageProjectUrl>
+    <RepositoryUrl>https://github.com/atifaziz/Resourceable</RepositoryUrl>
+    <RepositoryType>git</RepositoryType>
+    <PackageLicenseUrl>https://github.com/atifaziz/Resourceable/blob/master/COPYING.txt</PackageLicenseUrl>
+  </PropertyGroup>
+
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
+    <OutputPath>..\bin\Debug\</OutputPath>
+  </PropertyGroup>
+
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|AnyCPU'">
+    <OutputPath>..\bin\Release\</OutputPath>
+  </PropertyGroup>
+
+</Project>
