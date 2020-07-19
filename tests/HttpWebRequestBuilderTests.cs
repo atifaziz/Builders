@@ -19,6 +19,7 @@ namespace Builders.Tests
     using System;
     using System.Linq;
     using System.Net;
+    using System.Net.Cache;
     using System.Reflection;
     using Xunit;
 
@@ -28,7 +29,7 @@ namespace Builders.Tests
             WebRequest.CreateHttp("http://www.example.com/");
 
         static void Test<T>(T value,
-                            Func<T, Builder<HttpWebRequest>> builderFactory,
+                            Func<T, Action<HttpWebRequest>> builderFactory,
                             Func<HttpWebRequest, T> selector)
         {
             var request = CreateExampleRequest();
@@ -64,7 +65,11 @@ namespace Builders.Tests
             Test(value, HttpWebRequestBuilder.AutomaticDecompression,
                  request => request.AutomaticDecompression);
 
-        // TODO CachePolicy
+        [Theory, InlineData(RequestCacheLevel.BypassCache)]
+        public void CachePolicy(RequestCacheLevel value) =>
+            Test(new RequestCachePolicy(value), HttpWebRequestBuilder.CachePolicy,
+                 request => request.CachePolicy);
+
         // TODO ClientCertificates
         // TODO Connection
         // TODO ConnectionGroupName
@@ -176,7 +181,7 @@ namespace Builders.Tests
         {
             var property = typeof(HttpWebRequestBuilder).GetField(name, BindingFlags.Static | BindingFlags.Public);
             Assert.NotNull(property);
-            var builder = (Builder<HttpWebRequest>) property.GetValue(null);
+            var builder = (Action<HttpWebRequest>) property.GetValue(null);
 
             var request = CreateExampleRequest();
             builder(request);
